@@ -1,48 +1,17 @@
 package net.dingzhaobo.PsyduckScript.AST;
 
 public class Operator {
-    public enum Optr {
-        INVALID,   // invalid
-        PLUS,      // +
-        MINUS,     // -
-        MULTIPLY,  // *
-        DIVIDE,    // /
-        MOD,       // %
-
-        AND,       // &&
-        OR,        // ||
-        NOT,       // !
-        XOR,       // ^
-        BITAND,    // &
-        BITOR,     // |
-        BITNOT,    // !
-
-        EQ,        // ==
-        NE,        // !=
-        GT,        // >
-        LT,        // <
-        GE,        // >=
-        LE,        // <=
-
-        AGN,         // =
-        PLUSAGN,     // +=
-        MINUSAGN,    // -=
-        MULTIPLYAGN, // *=
-        DIVIDEAGN,   // /=
-        MODAGN,      // %=
-    }
-
-    public Optr optr;
+    public OperatorsEnum opt;
 
     public String toString() {
-        switch (optr) {
+        switch (opt) {
             case PLUS:
                 return "+";
             case MINUS:
                 return "-";
-            case MULTIPLY:
+            case MULTI:
                 return "*";
-            case DIVIDE:
+            case DIV:
                 return "/";
             case MOD:
                 return "%";
