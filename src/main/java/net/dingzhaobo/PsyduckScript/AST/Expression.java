@@ -1,9 +1,13 @@
 package net.dingzhaobo.PsyduckScript.AST;
 
-import lombok.Builder;
+import lombok.experimental.NonFinal;
 
-@Builder
+@NonFinal
 public class Expression extends ASTNode {
+    public Expression(int r, int c) {
+        super(r, c);
+    }
+
     @Override
     public String toString() {
         return "Expression()";
