@@ -2,18 +2,25 @@ package net.dingzhaobo.PsyduckScript.AST.Expressions;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Builder;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import net.dingzhaobo.PsyduckScript.AST.Expression;
 
-@Builder
-@RequiredArgsConstructor
 public class ArrayExpr extends Expression {
+    public ArrayExpr(int r, int c) {
+        super(r, c);
+        arr = new ArrayList<Expression>();
+    }
+
+    public ArrayExpr(int r, int c, String id, List<Expression> a) {
+        super(r, c);
+        arr = a;
+    }
+
     @NonNull
     private String id;
 
-    private List<Expression> arr = new ArrayList<Expression>();
+    @NonNull
+    private List<Expression> arr;
 
     @Override
     public String toString() {

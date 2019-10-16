@@ -1,9 +1,12 @@
 package net.dingzhaobo.PsyduckScript.AST;
 
-import lombok.Builder;
+import lombok.experimental.NonFinal;
 
-@Builder
+@NonFinal
 public class Statement extends ASTNode {
+    public Statement(int r, int c) {
+        super(r, c);
+    }
     @Override
     public String toString() {
         return "Statement()";

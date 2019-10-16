@@ -1,14 +1,17 @@
 package net.dingzhaobo.PsyduckScript.AST.Expressions;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NonNull;
 import net.dingzhaobo.PsyduckScript.AST.Expression;
 import net.dingzhaobo.PsyduckScript.AST.Operator;
 
-@Builder
-@AllArgsConstructor
 public class AssignExpr extends Expression {
+    public AssignExpr(int r, int c, Expression lh, Operator o, Expression rh) {
+        super(r, c);
+        lhs = lh;
+        rhs = rh;
+        opt = o;
+    }
+
     @NonNull
     private Expression lhs, rhs;
 

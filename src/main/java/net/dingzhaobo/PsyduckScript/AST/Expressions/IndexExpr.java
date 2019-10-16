@@ -1,13 +1,15 @@
 package net.dingzhaobo.PsyduckScript.AST.Expressions;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NonNull;
 import net.dingzhaobo.PsyduckScript.AST.Expression;
 
-@Builder
-@AllArgsConstructor
 public class IndexExpr extends Expression {
+    public IndexExpr(int r, int c, String name, Expression idx) {
+        super(r, c);
+        id = name;
+        index = idx;
+    }
+
     @NonNull
     private String id;
 

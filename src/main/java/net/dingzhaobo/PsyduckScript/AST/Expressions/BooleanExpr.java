@@ -1,13 +1,19 @@
 package net.dingzhaobo.PsyduckScript.AST.Expressions;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NonNull;
 import net.dingzhaobo.PsyduckScript.AST.Expression;
 
-@Builder
-@AllArgsConstructor
 public class BooleanExpr extends Expression {
+    public BooleanExpr(int r, int c) {
+        super(r, c);
+        value = false;
+    }
+
+    public BooleanExpr(int r, int c, boolean v) {
+        super(r, c);
+        value = v;
+    }
+
     @NonNull
     private boolean value;
 

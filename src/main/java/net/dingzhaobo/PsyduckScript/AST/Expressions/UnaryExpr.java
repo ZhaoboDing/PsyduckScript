@@ -1,14 +1,16 @@
 package net.dingzhaobo.PsyduckScript.AST.Expressions;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NonNull;
 import net.dingzhaobo.PsyduckScript.AST.Expression;
 import net.dingzhaobo.PsyduckScript.AST.Operator;
 
-@Builder
-@AllArgsConstructor
 public class UnaryExpr extends Expression {
+    public UnaryExpr(int r, int c, Operator o, Expression e) {
+        super(r, c);
+        opt = o;
+        expr = e;
+    }
+
     @NonNull
     private Expression expr;
 
