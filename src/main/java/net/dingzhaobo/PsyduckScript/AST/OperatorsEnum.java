@@ -4,8 +4,8 @@ public enum OperatorsEnum {
     INVALID,   // invalid
     PLUS,      // +
     MINUS,     // -
-    MULTI,  // *
-    DIV,    // /
+    MULTI,     // *
+    DIV,       // /
     MOD,       // %
 
     AND,       // &&

@@ -12,8 +12,8 @@ public enum Tokens {
 
     PLUS,      // +
     MINUS,     // -
-    MULT,     // *
-    DIV,    // /
+    MULT,      // *
+    DIV,       // /
     MOD,       // %
 
     AND,       // &&
@@ -34,8 +34,8 @@ public enum Tokens {
     AGN,       // =
     PLUSAGN,   // +=
     MINUSAGN,  // -=
-    MULTAGN,  // *=
-    DIVAGN, // /=
+    MULTAGN,   // *=
+    DIVAGN,    // /=
     MODAGN,    // %=
 
     COMMA,     // ,
