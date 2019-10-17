@@ -1,6 +1,6 @@
 package net.dingzhaobo.PsyduckScript.Lexer;
 
-public enum Tokens {
+public enum Token {
     INVALID,   // invalid
 
     ID,        // identifier
