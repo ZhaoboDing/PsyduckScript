@@ -1,74 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
 <reserved>
     <word>
         <lexeme>
             and
         </lexeme>
-        <StringifiedToken>
+        <token>
             AND
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             false
         </lexeme>
-        <StringifiedToken>
+        <token>
             FALSE
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             if
         </lexeme>
-        <StringifiedToken>
+        <token>
             IF
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             none
         </lexeme>
-        <StringifiedToken>
+        <token>
             NONE
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             not
         </lexeme>
-        <StringifiedToken>
+        <token>
             NOT
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             or
         </lexeme>
-        <StringifiedToken>
+        <token>
             OR
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             return
         </lexeme>
-        <StringifiedToken>
+        <token>
             RETURN
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             true
         </lexeme>
-        <StringifiedToken>
+        <token>
             TRUE
-        </StringifiedToken>
+        </token>
     </word>
     <word>
         <lexeme>
             while
         </lexeme>
-        <StringifiedToken>
+        <token>
             WHILE
-        </StringifiedToken>
+        </token>
     </word>
 </reserved>
