@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ReservedWords {
-    private Map<String, String> map = new HashMap<String, String>();
+    private Map<String, Token> map = new HashMap<String, Token>();
 
     public ReservedWords() {
         try {
@@ -29,7 +29,7 @@ public class ReservedWords {
                     throw new Exception("Duplicated lexeme");
                 }
                 else {
-                    map.put(lexeme, token);
+                    map.put(lexeme, Token.valueOf(token));
                 }
             }
         }
@@ -42,12 +42,12 @@ public class ReservedWords {
         return map.containsKey(lexeme);
     }
 
-    public String getToken(String lexeme) {
+    public Token getToken(String lexeme) {
         if (map.containsKey(lexeme)) {
             return map.get(lexeme);
         }
         else {
-            return lexeme;
+            return Token.ID;
         }
     }
 }
