@@ -11,13 +11,18 @@ public class Lexer {
     @NonNull
     private InputStream input;
 
-    @NonNull
-    private int row, col;
-
+    private int row = 0, col = 0;
+    private char nextBuffer = '\0';
     private ReservedWords reservedWords = new ReservedWords();
 
-    char getNext() throws EOFException {
+    private char getNext() throws EOFException {
         int c = 0;
+
+        if (nextBuffer != '\0') {
+            char res = nextBuffer;
+            nextBuffer = '\0';
+            return res;
+        }
 
         try {
             c = input.read();
@@ -36,13 +41,16 @@ public class Lexer {
 
     }
 
-    char peekNext() throws EOFException {
+    private char peekNext() throws EOFException {
         int c = 0;
 
+        if (nextBuffer != '\0') {
+            return nextBuffer;
+        }
+
         try {
-            input.mark(1);
             c = input.read();
-            input.reset();
+            nextBuffer = (char) c;
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -89,7 +97,8 @@ public class Lexer {
                 int r = row, c = col;
                 boolean isInt = true;
                 char p = peekNext();
-                StringBuffer stringBuffer = new StringBuffer(next);
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append(next);
 
                 while (Character.isDigit(p) || p == '.') {
                     if (p == '.') {
@@ -99,15 +108,14 @@ public class Lexer {
                         else {
                             throw new PsyduckSyntexError("Cannot recognize number", r, c);
                         }
-
-                        try {
-                            next = getNext();
-                            p = peekNext();
-                            stringBuffer.append(next);
-                        }
-                        catch (EOFException e) {
-                           break;
-                        }
+                    }
+                    try {
+                        next = getNext();
+                        p = peekNext();
+                        stringBuffer.append(next);
+                    }
+                    catch (EOFException e) {
+                        break;
                     }
                 }
 
@@ -121,7 +129,8 @@ public class Lexer {
 
             if (Character.isLetter(next) || next == '_') {
                 char p = peekNext();
-                StringBuffer stringBuffer = new StringBuffer(next);
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append(next);
 
                 while (Character.isLetter(p) || p =='_') {
                     next = getNext();

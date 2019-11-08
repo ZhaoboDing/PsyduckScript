@@ -26,6 +26,12 @@
             <artifactId>jdom2</artifactId>
             <version>2.0.6</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -36,5 +42,12 @@
                 </directory>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>
+                    /src/test/resources
+                </directory>
+            </testResource>
+        </testResources>
     </build>
 </project>
