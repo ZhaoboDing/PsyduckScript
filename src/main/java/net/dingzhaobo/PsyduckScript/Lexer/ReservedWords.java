@@ -10,11 +10,24 @@ import java.util.List;
 import java.util.Map;
 
 public class ReservedWords {
-    private Map<String, String> map = new HashMap<String, String>();
+    private Map<String, Token> map = new HashMap<String, Token>();
 
     public ReservedWords() {
+        String filename = "reserved_words_map.xml";
+        load(filename);
+    }
+
+    public Token getToken(String lexeme) {
+        if (map.containsKey(lexeme)) {
+            return map.get(lexeme);
+        }
+        else {
+            return Token.ID;
+        }
+    }
+
+    private void load(String filename) {
         try {
-            String filename = "reserved_words_map.xml";
             InputStream is = ClassLoader.getSystemResourceAsStream(filename);
 
             SAXBuilder saxBuilder = new SAXBuilder();
@@ -29,25 +42,12 @@ public class ReservedWords {
                     throw new Exception("Duplicated lexeme");
                 }
                 else {
-                    map.put(lexeme, token);
+                    map.put(lexeme, Token.valueOf(token));
                 }
             }
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public boolean isLexemeReserved(String lexeme) {
-        return map.containsKey(lexeme);
-    }
-
-    public String getToken(String lexeme) {
-        if (map.containsKey(lexeme)) {
-            return map.get(lexeme);
-        }
-        else {
-            return lexeme;
         }
     }
 }
