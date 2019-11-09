@@ -1,0 +1,5 @@
+"Here is a string"
+"Here is another string"
+
+# Exception should be thrown for the following string
+"This is an incomplete string since we do not have an ending double quote

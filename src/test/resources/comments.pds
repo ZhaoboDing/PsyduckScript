@@ -1,0 +1,11 @@
+# This is a comment
+var = "Some Variable"
+# This is another comment
+# followed by another line of comment
+stringCat = var + var
+
+# A comment after an empty line
+# and followed by another empty line
+
+# With a comment after the new line
+someFunction("someParameter") # comment after valid statement

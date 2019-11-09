@@ -1,0 +1,5 @@
+a = 00000010000 # leading 0's are supposed to be removed
+b = 2147483648 # This number is overflow but should be valid for Lexer
+c = 3.1415926535
+d = 0.101010101
+e = 1.1.1 # This is invalid

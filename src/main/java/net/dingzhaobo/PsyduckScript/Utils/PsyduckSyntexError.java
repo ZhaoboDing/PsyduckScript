@@ -1,5 +1,8 @@
 package net.dingzhaobo.PsyduckScript.Utils;
 
+import lombok.Getter;
+
+@Getter
 public class PsyduckSyntexError extends PsyduckException {
     protected int row, col;
     public PsyduckSyntexError(String errorMessage, int r, int c) {
@@ -8,8 +11,9 @@ public class PsyduckSyntexError extends PsyduckException {
         col = c;
     }
 
+    @Override
     public String errorMessage() {
         return "Error: " + message +
-                " at Line " + Integer.toString(row) + ", Row " + Integer.toString(col) + ".";
+                " at Line " + Integer.toString(row) + ", Column " + Integer.toString(col) + ".";
     }
 }

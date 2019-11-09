@@ -11,7 +11,7 @@ public class Lexer {
     @NonNull
     private InputStream input;
 
-    private int row = 0, col = 0;
+    private int row = 1, col = 0;
     private char nextBuffer = '\0';
     private ReservedWords reservedWords = new ReservedWords();
 
@@ -69,62 +69,34 @@ public class Lexer {
         try {
             char next = getNext();
 
-            if (meaningless(next)) {
-                while (meaningless(next)) {
-                    if (next == '\'') {
-                        row++;
-                        col = 0;
+            while (meaningless(next) || next == '#') {
+                if (meaningless(next)) {
+                    while (meaningless(next)) {
+                        if (next == '\n') {
+                            row++;
+                            col = 0;
+                        }
+                        next = getNext();
                     }
-                    next = getNext();
                 }
-            }
 
-            if (next == '#') {
-                while (next == '#') {
-                    while (next != '\n') {
-                        next = getNext();
-                    }
+                if (next == '#') {
+                    while (next == '#') {
+                        while (next != '\n') {
+                            next = getNext();
+                        }
 
-                    while (next == '\n') {
-                        row++;
-                        col = 0;
-                        next = getNext();
+                        while (next == '\n') {
+                            row++;
+                            col = 0;
+                            next = getNext();
+                        }
                     }
                 }
             }
 
             if (Character.isDigit(next)) {
-                int r = row, c = col;
-                boolean isInt = true;
-                char p = peekNext();
-                StringBuffer stringBuffer = new StringBuffer();
-                stringBuffer.append(next);
-
-                while (Character.isDigit(p) || p == '.') {
-                    if (p == '.') {
-                        if (isInt) {
-                            isInt = false;
-                        }
-                        else {
-                            throw new PsyduckSyntexError("Cannot recognize number", r, c);
-                        }
-                    }
-                    try {
-                        next = getNext();
-                        p = peekNext();
-                        stringBuffer.append(next);
-                    }
-                    catch (EOFException e) {
-                        break;
-                    }
-                }
-
-                if (isInt) {
-                    return new LexerResult(Token.INT, stringBuffer.toString());
-                }
-                else {
-                    return new LexerResult(Token.DOUBLE, stringBuffer.toString());
-                }
+                return readNumbers(next, true);
             }
 
             if (Character.isLetter(next) || next == '_') {
@@ -172,6 +144,9 @@ public class Lexer {
                 if (peekNext() == '=') {
                     next = getNext();
                     return new LexerResult(Token.MINUSAGN, "-=");
+                }
+                else if (Character.isDigit(peekNext())) {
+                    return readNumbers(getNext(), false);
                 }
                 else {
                     return new LexerResult(Token.MINUS, "-");
@@ -270,11 +245,59 @@ public class Lexer {
                 }
             }
 
-            throw new PsyduckSyntexError("Unrecognized token", row, col);
+            throw new PsyduckSyntexError("Unrecognized token \"" + String.valueOf((int) next) + "\"", row, col);
 
         }
         catch (EOFException e) {
             return new LexerResult(Token.EOF, "");
+        }
+    }
+
+    private LexerResult readNumbers(char next, boolean positive) throws PsyduckSyntexError, EOFException {
+        int r = row, c = col;
+        boolean isInt = true;
+        boolean leadingZero = true;
+        char p = peekNext();
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (!positive) {
+            stringBuffer.append('-');
+        }
+        stringBuffer.append(next);
+
+        while (Character.isDigit(p) || p == '.') {
+            if (p == '.') {
+                if (isInt) {
+                    isInt = false;
+                }
+                else {
+                    throw new PsyduckSyntexError("Cannot recognize number", r, c);
+                }
+            }
+            else if (leadingZero && p == '0') {
+                next = getNext();
+                p = peekNext();
+                continue;
+            }
+            else {
+                leadingZero = false;
+            }
+
+            try {
+                next = getNext();
+                p = peekNext();
+                stringBuffer.append(next);
+            }
+            catch (EOFException e) {
+                break;
+            }
+        }
+
+        if (isInt) {
+            return new LexerResult(Token.INT, stringBuffer.toString());
+        }
+        else {
+            return new LexerResult(Token.DOUBLE, stringBuffer.toString());
         }
     }
 
