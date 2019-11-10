@@ -1,4 +1,4 @@
-package net.dingzhaobo.PsyduckScript.Utils;
+package net.dingzhaobo.PsyduckScript.Exceptions;
 
 import lombok.NonNull;
 

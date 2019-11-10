@@ -2,7 +2,7 @@ package net.dingzhaobo.PsyduckScript.Lexer;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import net.dingzhaobo.PsyduckScript.Utils.PsyduckSyntexError;
+import net.dingzhaobo.PsyduckScript.Exceptions.PsyduckSyntaxError;
 
 import java.io.*;
 
@@ -65,7 +65,7 @@ public class Lexer {
     }
 
 
-    public LexerResult analyze() throws PsyduckSyntexError {
+    public LexerResult analyze() throws PsyduckSyntaxError {
         try {
             char next = getNext();
 
@@ -125,7 +125,7 @@ public class Lexer {
                     }
                 }
                 catch (EOFException e) {
-                    throw new PsyduckSyntexError("InComplete string", r, c);
+                    throw new PsyduckSyntaxError("InComplete string", r, c);
                 }
 
                 return new LexerResult(Token.STRING, stringBuffer.toString());
@@ -245,7 +245,7 @@ public class Lexer {
                 }
             }
 
-            throw new PsyduckSyntexError("Unrecognized token \"" + String.valueOf((int) next) + "\"", row, col);
+            throw new PsyduckSyntaxError("Unrecognized token \"" + String.valueOf((int) next) + "\"", row, col);
 
         }
         catch (EOFException e) {
@@ -253,7 +253,7 @@ public class Lexer {
         }
     }
 
-    private LexerResult readNumbers(char next, boolean positive) throws PsyduckSyntexError, EOFException {
+    private LexerResult readNumbers(char next, boolean positive) throws PsyduckSyntaxError, EOFException {
         int r = row, c = col;
         boolean isInt = true;
         boolean leadingZero = true;
@@ -271,7 +271,7 @@ public class Lexer {
                     isInt = false;
                 }
                 else {
-                    throw new PsyduckSyntexError("Cannot recognize number", r, c);
+                    throw new PsyduckSyntaxError("Cannot recognize number", r, c);
                 }
             }
             else if (leadingZero && p == '0') {
