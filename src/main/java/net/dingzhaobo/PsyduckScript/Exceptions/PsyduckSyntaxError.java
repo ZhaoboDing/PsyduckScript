@@ -1,11 +1,12 @@
-package net.dingzhaobo.PsyduckScript.Utils;
+package net.dingzhaobo.PsyduckScript.Exceptions;
 
 import lombok.Getter;
 
 @Getter
-public class PsyduckSyntexError extends PsyduckException {
-    protected int row, col;
-    public PsyduckSyntexError(String errorMessage, int r, int c) {
+public class PsyduckSyntaxError extends PsyduckException {
+    private int row, col;
+
+    public PsyduckSyntaxError(String errorMessage, int r, int c) {
         super(errorMessage);
         row = r;
         col = c;
@@ -13,7 +14,7 @@ public class PsyduckSyntexError extends PsyduckException {
 
     @Override
     public String errorMessage() {
-        return "Error: " + message +
+        return "Syntax Error: " + message +
                 " at Line " + Integer.toString(row) + ", Column " + Integer.toString(col) + ".";
     }
 }

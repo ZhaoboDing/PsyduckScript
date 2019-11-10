@@ -1,6 +1,6 @@
 package net.dingzhaobo.PsyduckScript.Lexer;
 
-import net.dingzhaobo.PsyduckScript.Utils.PsyduckSyntexError;
+import net.dingzhaobo.PsyduckScript.Exceptions.PsyduckSyntaxError;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -37,7 +37,7 @@ public class LexerTest {
         }
     }
 
-    @Test(expected = PsyduckSyntexError.class)
+    @Test(expected = PsyduckSyntaxError.class)
     public void testNumbers() throws Exception {
         String scriptPath = "src/test/resources/numbers.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
@@ -85,7 +85,7 @@ public class LexerTest {
         }
     }
 
-    @Test(expected = PsyduckSyntexError.class)
+    @Test(expected = PsyduckSyntaxError.class)
     public void testStrings() throws Exception {
         String scriptPath = "src/test/resources/strings.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
