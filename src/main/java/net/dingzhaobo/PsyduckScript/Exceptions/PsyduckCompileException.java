@@ -12,6 +12,7 @@ public class PsyduckCompileException extends PsyduckException {
     @Override
     public String errorMessage() {
         return "Compile Error: " + message +
-                " at Line " + Integer.toString(row) + ", Column " + Integer.toString(col) + ".";
+                " at Line " + Integer.toString(row) +
+                ", Column " + Integer.toString(col) + ".";
     }
 }

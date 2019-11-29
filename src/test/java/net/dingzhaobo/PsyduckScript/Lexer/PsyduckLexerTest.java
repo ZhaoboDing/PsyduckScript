@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -64,9 +63,13 @@ public class PsyduckLexerTest {
             expectedTokens.add((Token) pair.getValue());
         }
 
-        Lexer psyduckLexer = new PsyduckLexer(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
+        Lexer psyduckLexer = new PsyduckLexer(
+                new ByteArrayInputStream(stringBuffer.toString().getBytes()));
         List<LexerResult> results = psyduckLexer.tokenization();
-        List<Token> actualTokens = results.stream().map(LexerResult::getToken).collect(Collectors.toList());
+        List<Token> actualTokens = results
+                .stream()
+                .map(LexerResult::getToken)
+                .collect(Collectors.toList());
         assertEquals(expectedTokens, actualTokens);
     }
 
