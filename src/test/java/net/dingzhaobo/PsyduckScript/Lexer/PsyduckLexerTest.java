@@ -8,64 +8,52 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-public class LexerTest {
+public class PsyduckLexerTest {
     @Test
     public void testSyntaxCorrectInput() throws Exception {
         String scriptPath = "src/test/resources/syntaxCorrect.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
-        Lexer lexer = new Lexer(inputStream);
+        Lexer psyduckLexer = new PsyduckLexer(inputStream);
 
-        LexerResult lexerResult = lexer.analyze();
-        while (lexerResult.getToken() != Token.EOF) {
-            // System.out.println("<" + lexerResult.getToken().toString() + ", " + lexerResult.getLexeme() + ">");
-            lexerResult = lexer.analyze();
-        }
+        psyduckLexer.tokenization();
     }
 
     @Test
     public void testComments() throws Exception {
         String scriptPath = "src/test/resources/comments.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
-        Lexer lexer = new Lexer(inputStream);
+        Lexer psyduckLexer = new PsyduckLexer(inputStream);
 
-        LexerResult lexerResult = lexer.analyze();
-        while (lexerResult.getToken() != Token.EOF) {
-            lexerResult = lexer.analyze();
-        }
+        psyduckLexer.tokenization();
     }
 
     @Test(expected = PsyduckSyntaxError.class)
     public void testNumbers() throws Exception {
         String scriptPath = "src/test/resources/numbers.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
-        Lexer lexer = new Lexer(inputStream);
+        Lexer psyduckLexer = new PsyduckLexer(inputStream);
 
-        LexerResult lexerResult = lexer.analyze();
-        while (lexerResult.getToken() != Token.EOF) {
-            lexerResult = lexer.analyze();
-        }
+        psyduckLexer.tokenization();
     }
 
     @Test
     public void testIds() throws Exception {
         String scriptPath = "src/test/resources/validId.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
-        Lexer lexer = new Lexer(inputStream);
+        Lexer psyduckLexer = new PsyduckLexer(inputStream);
 
-        LexerResult lexerResult = lexer.analyze();
-        while (lexerResult.getToken() != Token.EOF) {
-            assertEquals(lexerResult.getToken(), Token.ID);
-            lexerResult = lexer.analyze();
-        }
+        psyduckLexer.tokenization();
     }
 
     @Test
     public void testReservedWords() throws Exception {
         StringBuffer stringBuffer = new StringBuffer();
-        List<Token> tokens = new ArrayList<Token>();
+        List<Token> expectedTokens = new ArrayList<Token>();
 
         Map<String, Token> reservedMap = getReservedMap();
 
@@ -73,28 +61,22 @@ public class LexerTest {
         while (iterator.hasNext()) {
             Map.Entry pair = (Map.Entry) iterator.next();
             stringBuffer.append(pair.getKey() + " ");
-            tokens.add((Token) pair.getValue());
+            expectedTokens.add((Token) pair.getValue());
         }
 
-        Lexer lexer = new Lexer(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
-        LexerResult lexerResult = lexer.analyze();
-        int index = 0;
-        while (lexerResult.getToken() != Token.EOF) {
-            assertEquals(lexerResult.getToken(), tokens.get(index++));
-            lexerResult = lexer.analyze();
-        }
+        Lexer psyduckLexer = new PsyduckLexer(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
+        List<LexerResult> results = psyduckLexer.tokenization();
+        List<Token> actualTokens = results.stream().map(LexerResult::getToken).collect(Collectors.toList());
+        assertEquals(expectedTokens, actualTokens);
     }
 
     @Test(expected = PsyduckSyntaxError.class)
     public void testStrings() throws Exception {
         String scriptPath = "src/test/resources/strings.pds";
         InputStream inputStream = new FileInputStream(scriptPath);
-        Lexer lexer = new Lexer(inputStream);
+        Lexer psyduckLexer = new PsyduckLexer(inputStream);
 
-        LexerResult lexerResult = lexer.analyze();
-        while (lexerResult.getToken() != Token.EOF) {
-            lexerResult = lexer.analyze();
-        }
+        psyduckLexer.tokenization();
     }
 
     private Map<String ,Token> getReservedMap() throws Exception {
