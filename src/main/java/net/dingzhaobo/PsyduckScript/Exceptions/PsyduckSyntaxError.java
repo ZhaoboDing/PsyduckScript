@@ -15,6 +15,7 @@ public class PsyduckSyntaxError extends PsyduckException {
     @Override
     public String errorMessage() {
         return "Syntax Error: " + message +
-                " at Line " + Integer.toString(row) + ", Column " + Integer.toString(col) + ".";
+                " at Line " + Integer.toString(row) +
+                ", Column " + Integer.toString(col) + ".";
     }
 }

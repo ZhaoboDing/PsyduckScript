@@ -12,6 +12,7 @@ public class PsyduckRuntimeException extends PsyduckException {
     @Override
     public String errorMessage() {
         return "Runtime Error: " + message +
-                " at Line " + Integer.toString(row) + ", Column " + Integer.toString(col) + ".";
+                " at Line " + Integer.toString(row) +
+                ", Column " + Integer.toString(col) + ".";
     }
 }
